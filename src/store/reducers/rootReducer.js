@@ -1,31 +1,47 @@
-import { configureStore } from "@reduxjs/toolkit"
-import { BUTTON_CLICK_HANDLER, 
-         PUSH_FLIGHTS } from "../actions/actionTypes"
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import axios from "axios"
+
+
+export const fetchFlights = createAsyncThunk(
+    'flights/fetchFlights',
+    async (_, { rejectWithValue, dispatch }) => {
+        dispatch(filterHandler())
+
+        const url = 'http://localhost:3000/flights.json'
+
+        try {
+            await axios.get(url).then(data => {
+                const response = data.data.result.flights
+                dispatch(push(response))
+            })
+        } catch (err) {
+            console.log(err)
+        }
+    }      
+)
+
 
 const initialState = {
     result: [],
     loading: false
 }
 
-const rootReducer = (state = initialState, action) => {
-    switch (action.type) {
-        case BUTTON_CLICK_HANDLER:
-            return {
-                ...state,
-                loading: true
-            }
-        case PUSH_FLIGHTS: 
-            return  {
-                ...state, 
-                result: action.payData
-            }
-        default:
-            return state
+export const flightsSlice = createSlice({
+    name: 'flights',
+    initialState,
+    reducers: {
+        filterHandler: (state, action) => {
+            state.loading = true
+        },
+        push: (state, action) => {
+            state.result = action.payload
+        }
+    },
+    extraReducers: {
+        [fetchFlights.pending]: () => console.log('fullfiled')
     }
-}
-
-const store = configureStore({
-    reducer: rootReducer
 })
 
-export default store
+export const {filterHandler, push} = flightsSlice.actions
+export default flightsSlice.reducer
+

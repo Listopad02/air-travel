@@ -4,7 +4,14 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
-import store from './store/reducers/rootReducer';
+import { configureStore } from "@reduxjs/toolkit"
+import flightsSlice from './store/reducers/rootReducer';
+
+const store = configureStore({
+  reducer: {
+    flights: flightsSlice
+  }
+})
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
