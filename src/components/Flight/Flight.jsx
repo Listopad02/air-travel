@@ -1,17 +1,27 @@
 import "./Flight.css"
+import { fetchFlights } from "../../store/actions/actions"
+import { connect, useDispatch } from "react-redux"
+import { useEffect } from "react"
 
-const Flight = () => {
+
+const Flight = props => {
+
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(fetchFlights())
+    })
+
     return (
         <div>
-            <div style={{
-                width: '100%',
-                padding: '5px 10px'
-            }}>
+            <div style={{ width: '100%', padding: '5px 10px' }}>
                 <span style={{color: '#1E90FF'}}>
-                    Москва, ШЕРЕМЕТЬЕВО
+                    { props.result[0].flight.legs[0].segments[0].departureCity.caption },&nbsp;
+                    { props.result[0].flight.legs[0].segments[0].departureAirport.caption }
                     <span style={{fontSize: 20, padding: "0 15px 0 15px"}}>→ </span>
                 </span> 
-                <span style={{color: '#1E90FF'}}>Лондон, Хитроу</span>
+                <span style={{color: '#1E90FF'}}>
+                    { props.result[0].flight.legs[0].segments[0].arrivalAirport.caption }
+                </span>
                 <hr style={{opacity: .3}}/>
             </div>
             <div className="Time">
@@ -41,11 +51,23 @@ const Flight = () => {
             </div>
             <div>
                 <p style={{padding: "0px 10px", color: "#000"}}>
-                    Рейс выполняет: Аэрофлот
+                    {/* Рейс выполняет: {props.result[0].flight.carrier.caption} */}
                 </p>
             </div>
         </div>
     )
 }
 
-export default Flight
+function mapStateToProps(state) {
+    return {
+        result: state.result
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        fetchFlights: () => dispatch(fetchFlights())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Flight)
