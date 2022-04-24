@@ -1,31 +1,27 @@
 import "./Flight.css"
-import { useDispatch, useSelector } from "react-redux"
-import { useEffect } from "react"
-import { fetchFlights } from "../../store/reducers/rootReducer"
 
-
-const Flight = () => {
-
-    const dispatch = useDispatch()
-    useEffect(() => {
-        dispatch(fetchFlights())
-    }, [dispatch])
-
-    const flights = useSelector((state) => state.flights.result)
+const Flight = props => {
+    const flights = props.flights
 
     return (
         <div>
             {
                 flights?.map(flight => 
-                    <>
+                    <div key={Math.random()}>
                     <div style={{ width: '100%', padding: '5px 10px' }}>
                         <span style={{color: '#1E90FF'}}>
-                            { flight.flight.legs[0].segments[0].departureCity.caption },&nbsp;
-                            { flight.flight.legs[0].segments[0].departureAirport.caption }
+                            { flight.segments[0].departureCity ? 
+                              flight.segments[0].departureCity.caption : <div></div>
+                            },&nbsp;
+                            { flight.segments[0].departureAirport ?
+                              flight.segments[0].departureAirport.caption : <div></div>
+                            }
                             <span style={{fontSize: 20, padding: "0 15px 0 15px"}}>→ </span>
                         </span> 
                         <span style={{color: '#1E90FF'}}>
-                            { flight.flight.legs[0].segments[0].arrivalAirport.caption }
+                            { flight.segments[0].arrivalAirport ? 
+                              flight.segments[0].arrivalAirport.caption : <div></div>
+                            }
                         </span>
                         <hr style={{opacity: .3}}/>
                     </div>
@@ -59,7 +55,7 @@ const Flight = () => {
                             {/* Рейс выполняет: {props.result[0].flight.carrier.caption} */}
                         </p>
                     </div>
-                    </>
+                    </div>
                 )
             }
         </div>
