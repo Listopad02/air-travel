@@ -5,7 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { configureStore } from "@reduxjs/toolkit"
-import flightsSlice from './store/reducers/rootReducer';
+import flightsSlice from './store/slices/rootReducer';
 
 const store = configureStore({
   reducer: {

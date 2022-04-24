@@ -1,5 +1,5 @@
 import Flight from "../../components/Flight/Flight"
-import { fetchFlights } from "../../store/reducers/rootReducer"
+import { fetchFlights } from "../../store/slices/rootReducer"
 import { connect, useDispatch } from "react-redux"
 import { useEffect } from "react"
 import { useSelector } from "react-redux"
@@ -12,7 +12,6 @@ const FlightsList = () => {
     }, [dispatch])
 
     const flights = useSelector((state) => state.flights.result)
-    console.log(flights);
     
     return (
         <>
