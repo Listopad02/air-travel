@@ -12,20 +12,21 @@ const FlightsList = () => {
     }, [dispatch])
 
     const flights = useSelector((state) => state.flights.result)
+    console.log(flights);
     
     return (
         <>
             {
-            flights?.map(flight => 
+            flights?.map((flight, i) => 
                 <div className="Travel" key={Math.random()}>
                     <div className="TravelHead">
-                        {/* <span>{props.result[0].flight.carrier.caption}</span> */}
+                        <span>{flights[i].flight.carrier.caption}</span>
                         <div className="TravelHeadPrice">
-                            <span className="TravelHeadPrice">10000 ₽</span><br />
+                            <span className="TravelHeadPrice">{flights[i].flight.price.total.amount} ₽</span><br />
                             <span style={{float: 'right', fontSize: 16}}>Стоимость для одного взрослого пассажира</span> 
                         </div>
                     </div>
-                    <Flight flights={flight.flight.legs} />
+                    <Flight flights={flight.flight.legs} carrier={flight.flight.carrier} />
                     <div style={{width: '100%'}}>
                         <button className="btnWrite">ВЫБРАТЬ</button>
                     </div>

@@ -15,7 +15,7 @@ const Input = props => {
                     value={props.value}
                     onChange={props.onChange}
                 />
-                {props.label}
+                { props.label }
             </label>
         </div>
     )
