@@ -1,7 +1,7 @@
 .TravelsList {
     display: flex;
     flex-direction: column;
-    width: 65%;
+    width: 80%;
     margin: 0 auto;
 }
 
@@ -10,7 +10,7 @@
     display: flex;
     flex-direction: column;
     color: #fff;
-    width: 65%;
+    width: 90%;
 }
 
 .TravelHead {

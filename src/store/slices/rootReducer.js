@@ -1,11 +1,24 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import axios from "axios"
 
+const initialState = {
+    loading: true,
+    result: [],
+    companies: [],
+    min: '',
+    max: '',
+    zeroTransfer: null,
+    oneTransfer: null,
+    encrement: null,
+    decrement: null,
+    time: null,
+    avia: null
+}
 
 export const fetchFlights = createAsyncThunk(
     'flights/fetchFlights',
     async (_, { rejectWithValue, dispatch }) => {
-        dispatch(filterHandler())
+        dispatch(fetchTravelsStart())
 
         const url = 'http://localhost:3000/flights.json'
 
@@ -20,36 +33,22 @@ export const fetchFlights = createAsyncThunk(
     }      
 )
 
-
-const initialState = {
-    loading: false,
-    result: [],
-    companies: [],
-    min: '',
-    max: '',
-    zeroTransfer: null,
-    oneTransfer: null,
-    encrement: null,
-    decrement: null,
-    time: null,
-    avia: null
-}
-
 export const flightsSlice = createSlice({
     name: 'flights',
     initialState,
     reducers: {
-        filterHandler: (state, action) => {
+        fetchTravelsStart: (state, action) => {
             state.loading = true
         },
         push: (state, action) => {
             state.result = action.payload
+            state.loading = false
         },
         fetchMinInput: (state, action) => {
             state.min = action.payload
         },
         fetchMaxInput: (state, action) => {
-            state.max = action.payload
+            state.max = action.max
         },
         fetchZeroTransfer: (state, action) => {
             state.zeroTransfer = action.payload
@@ -68,6 +67,9 @@ export const flightsSlice = createSlice({
         },
         fetchAvia: (state, action) => {
             state.avia = action.payload
+        },
+        fetchCompany: (state, action) => {
+            state.companies = action.payload
         }
     },
     extraReducers: {
@@ -75,9 +77,9 @@ export const flightsSlice = createSlice({
     }
 })
 
-export const {filterHandler, push, fetchMinInput,
+export const {fetchTravelsStart, push, fetchMinInput,
               fetchMaxInput, fetchZeroTransfer,
               fetchOneTransfer, fetchForEncrement, fetchForDecrement,
-              fetchForTime, fetchAvia} = flightsSlice.actions
+              fetchForTime, fetchAvia, fetchCompany} = flightsSlice.actions
 export default flightsSlice.reducer
 

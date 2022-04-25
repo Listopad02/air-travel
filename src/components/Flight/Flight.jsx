@@ -61,7 +61,7 @@ const Flight = props => {
                                 { new Date(flight.segments[0].arrivalDate).getUTCHours() + ':' + (
                                   new Date(flight.segments[0].arrivalDate).getUTCMinutes().toString().length === 1 ?
                                   new Date(flight.segments[0].arrivalDate).getUTCMinutes() + '0' : 
-                                  new Date(flight.segments[0].arrivalDate).getUTCMinutes() + ' ')}
+                                  new Date(flight.segments[0].departureDate).getUTCMinutes() + ' ')}
                                 {/* 21:45 */}
                             </span>
                         </div>
